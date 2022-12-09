@@ -40,6 +40,10 @@ export const Header: FC = memo(function Header() {
     navigate('/home/event');
   }, []);
 
+  const onClickNewsAdd = useCallback(() => {
+    navigate('/home/news_add');
+  }, []);
+
   const onClickLogout = useCallback(() => {
     (async () => signOut())();
   }, []);
@@ -59,8 +63,11 @@ export const Header: FC = memo(function Header() {
           <Box pr={5} _hover={{ opacity: 0.7 }}>
             <Link onClick={onClickEvent}>Event</Link>
           </Box>
-          <Box _hover={{ opacity: 0.7 }}>
+          <Box pr={5} _hover={{ opacity: 0.7 }}>
             <Link onClick={onClickSetting}>Setting</Link>
+          </Box>
+          <Box _hover={{ opacity: 0.7 }}>
+            <Link onClick={onClickNewsAdd}>News Add</Link>
           </Box>
         </Flex>
         <Flex>

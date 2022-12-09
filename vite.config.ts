@@ -7,8 +7,14 @@ export default defineConfig({
     open: true,
   },
   define: {
-    global: {},
+    // global: {},
+    'window.global': {},
     'process.env': process.env,
+  },
+  resolve: {
+    alias: {
+      './runtimeConfig': './runtimeConfig.browser',
+    },
   },
   plugins: [react()],
 });
