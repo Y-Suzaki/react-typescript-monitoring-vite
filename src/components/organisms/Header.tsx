@@ -66,8 +66,14 @@ export const Header: FC = memo(function Header() {
           <Box pr={5} _hover={{ opacity: 0.7 }}>
             <Link onClick={onClickSetting}>Setting</Link>
           </Box>
-          <Box _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickNewsAdd}>News Add</Link>
+          <Box pr={5} _hover={{ opacity: 0.7 }}>
+            <Link onClick={onClickNewsAdd}>News</Link>
+          </Box>
+          <Box pr={5} _hover={{ opacity: 0.7 }}>
+            <Link onClick={onClickNewsAdd}>OTA</Link>
+          </Box>
+          <Box pr={5} _hover={{ opacity: 0.7 }}>
+            <Link onClick={onClickNewsAdd}>Device</Link>
           </Box>
         </Flex>
         <Flex>
