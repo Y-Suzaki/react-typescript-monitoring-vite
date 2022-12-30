@@ -15,28 +15,23 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import * as yup from 'yup';
-import { InferType } from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { SubmitButton } from '../../atoms/button/SubmitButton';
+import { useNews } from '../../../hooks/useNews';
+import { getCurrentDate } from '../../../helper/DateFormatter';
+import { regFormSchema, RegFormSchema } from './NewsAddForm';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-// Formバリデーションを定義
-const regFormSchema = yup.object({
-  title: yup.string().required(),
-  content: yup.string().required(),
-  publicationDate: yup.string().matches(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/),
-  endDate: yup.string().matches(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/),
-});
-type RegFormSchema = InferType<typeof regFormSchema>;
-
 export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
   const { isOpen, onClose } = props;
+  const { addNews, isLoading, isError } = useNews();
+  const initDay = getCurrentDate();
+
   const {
     register,
     handleSubmit,
@@ -46,17 +41,24 @@ export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
     defaultValues: {
       title: '',
       content: '',
+      publicationDate: initDay,
     },
     resolver: yupResolver(regFormSchema),
   });
-  const onSubmit: SubmitHandler<RegFormSchema> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<RegFormSchema> = (data) => {
+    (async () => {
+      await addNews(data);
+      !isError && reset();
+    })();
+  };
+
   const onCloseModal = () => {
     reset();
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal} autoFocus={false} size={'lg'} motionPreset="slideInBottom">
+    <Modal isOpen={isOpen} onClose={onCloseModal} autoFocus={false} size={'xl'} motionPreset="slideInBottom">
       <ModalOverlay />
       <ModalContent pb={4}>
         <ModalHeader>Add News</ModalHeader>
@@ -106,7 +108,7 @@ export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
                 <FormErrorMessage>{errors.endDate?.message}</FormErrorMessage>
               </FormControl>
               <Box width={'50%'} textAlign={'left'} mt={'24px'}>
-                <SubmitButton>Register</SubmitButton>
+                <SubmitButton isLoading={isLoading}>Register</SubmitButton>
               </Box>
             </form>
           </VStack>
