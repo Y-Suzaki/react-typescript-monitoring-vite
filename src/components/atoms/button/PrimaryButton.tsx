@@ -10,7 +10,7 @@ type Props = {
 
 export const PrimaryButton: FC<Props> = memo(function PrimaryButton(props) {
   const { children, onClick, disable = false, loading = false } = props;
-  console.log('PrimaryButtonが再描画されました。');
+  // console.log('PrimaryButtonが再描画されました。');
   return (
     <Button
       bg="teal.500"

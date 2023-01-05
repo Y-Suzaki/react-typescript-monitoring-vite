@@ -8,6 +8,7 @@ export type NewsSummary = {
   content: string;
   publicationDate: string;
   endDate: string;
+  status: number;
 };
 
 export type NewsDetail = {
@@ -16,6 +17,7 @@ export type NewsDetail = {
   content: string;
   publicationDate: string;
   endDate: string;
+  status: number;
 };
 
 export type NewsRequest = {

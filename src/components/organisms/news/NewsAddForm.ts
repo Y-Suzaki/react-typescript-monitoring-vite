@@ -2,7 +2,7 @@
 import * as yup from 'yup';
 import { InferType } from 'yup';
 
-export const regFormSchema = yup.object({
+export const newsSchemaBase = {
   title: yup.string().required('Title is required.'),
   content: yup.string().required('Content is required.'),
   publicationDate: yup
@@ -12,6 +12,7 @@ export const regFormSchema = yup.object({
     message: 'End date must match "yyyy-MM-dd HH:mm"',
     excludeEmptyString: true,
   }),
-});
+};
 
+export const regFormSchema = yup.object(newsSchemaBase);
 export type RegFormSchema = InferType<typeof regFormSchema>;

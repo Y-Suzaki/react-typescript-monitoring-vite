@@ -3,7 +3,10 @@ import { FC } from 'react';
 
 export const LoadingSpinner: FC = () => {
   return (
-    <Center h="100vh">
+    // <Center h="100vh">
+    //   <Spinner />
+    // </Center>
+    <Center h="10vh">
       <Spinner />
     </Center>
   );
