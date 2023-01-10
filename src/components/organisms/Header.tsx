@@ -44,6 +44,10 @@ export const Header: FC = memo(function Header() {
     navigate('/home/news_add');
   }, []);
 
+  const onClickDevice = useCallback(() => {
+    navigate('/home/device');
+  }, []);
+
   const onClickLogout = useCallback(() => {
     (async () => signOut())();
   }, []);
@@ -73,7 +77,7 @@ export const Header: FC = memo(function Header() {
             <Link onClick={onClickNewsAdd}>OTA</Link>
           </Box>
           <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickNewsAdd}>Device</Link>
+            <Link onClick={onClickDevice}>Device</Link>
           </Box>
         </Flex>
         <Flex>
