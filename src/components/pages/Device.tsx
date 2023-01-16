@@ -14,13 +14,20 @@ import {
 import { Header } from '../organisms/Header';
 import { PrimaryButton } from '../atoms/button/PrimaryButton';
 import { DeviceAddModal } from '../organisms/device/DeviceAddModal';
+import { DeviceDetail } from '../organisms/device/DeviceDetail';
+import { useDeviceDetail } from '../../hooks/useDeviceDetail';
 
 export const Device: FC = memo(function News() {
   const [imei, setImei] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { deviceDetail, getDeviceDetail, isLoading } = useDeviceDetail();
 
   const onChangeImei = (e: ChangeEvent<HTMLInputElement>) => {
     setImei(e.target.value);
+  };
+
+  const onClickSearch = (imei: string) => {
+    (async () => getDeviceDetail(imei))();
   };
 
   const onCloseDeviceAdd = () => {
@@ -44,15 +51,18 @@ export const Device: FC = memo(function News() {
                 onChange={onChangeImei}
               />
             </FormControl>
-            {/*<Box justifyContent="bottom">*/}
-            {/*  /!*<PrimaryButton loading={isLoading} disable={!available} onClick={() => onClickSearch(imei, day)}>*!/*/}
-            {/*  <PrimaryButton>Search</PrimaryButton>*/}
-            {/*</Box>*/}
-            <IconButton colorScheme="teal" aria-label="Call Segun" size="lg" icon={<PhoneIcon />} />
+            <Box justifyContent="bottom">
+              <PrimaryButton loading={isLoading} disable={!imei} onClick={() => onClickSearch(imei)}>
+                Search
+              </PrimaryButton>
+              {/*<PrimaryButton>Search</PrimaryButton>*/}
+            </Box>
+            {/*<IconButton colorScheme="teal" aria-label="Call Segun" size="lg" icon={<PhoneIcon />} />*/}
           </HStack>
           <PrimaryButton onClick={onOpen}>Add Device</PrimaryButton>
         </HStack>
         <Divider />
+        {deviceDetail ? <DeviceDetail deviceDetail={deviceDetail} /> : null}
       </VStack>
       <DeviceAddModal isOpen={isOpen} onClose={onCloseDeviceAdd} />
     </>
