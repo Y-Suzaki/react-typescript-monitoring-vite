@@ -62,7 +62,9 @@ export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
     <Modal isOpen={isOpen} onClose={onCloseModal} autoFocus={false} size={'xl'} motionPreset="slideInBottom">
       <ModalOverlay />
       <ModalContent pb={4}>
-        <ModalHeader>Add News</ModalHeader>
+        <ModalHeader textAlign="center" p={2}>
+          Add News
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody mx={8}>
           <VStack align={'left'} bgColor={'white'}>
@@ -72,7 +74,7 @@ export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
                 <FormLabel htmlFor="title" mt={2}>
                   Title
                   <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
+                    req
                   </Badge>
                 </FormLabel>
                 <Input size="md" {...register('title')} />
@@ -83,7 +85,7 @@ export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
                 <FormLabel htmlFor="content" mt={4}>
                   Content
                   <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
+                    req
                   </Badge>
                 </FormLabel>
                 <Textarea size="md" {...register('content')} />
@@ -94,10 +96,10 @@ export const NewsAddModal: FC<Props> = memo(function NewsAddModal(props) {
                 <FormLabel htmlFor="publicationDate" mt={2}>
                   Publication Date
                   <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
+                    req
                   </Badge>
                 </FormLabel>
-                <Input size="md" {...register('publicationDate')} />
+                <Input size="md" {...register('publicationDate')} placeholder="yyyy-MM-dd HH:mm" />
                 <FormHelperText>Format: yyyy-MM-dd HH:mm (JST)</FormHelperText>
                 <FormErrorMessage>{errors.publicationDate?.message}</FormErrorMessage>
               </FormControl>

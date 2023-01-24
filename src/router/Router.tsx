@@ -13,6 +13,7 @@ import { Location } from '../components/pages/Location';
 import { Event } from '../components/pages/Event';
 import { News } from '../components/pages/News';
 import { Device } from '../components/pages/Device';
+import { OTA } from '../components/pages/OTA';
 
 export const Router = function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -98,6 +99,15 @@ const Homes = memo(function Homes(props: { isAuthenticated: boolean }) {
         element={
           <PrivateRouter isAuthenticated={isAuthenticated}>
             <Device />
+          </PrivateRouter>
+        }
+      />
+
+      <Route
+        path={'/ota'}
+        element={
+          <PrivateRouter isAuthenticated={isAuthenticated}>
+            <OTA />
           </PrivateRouter>
         }
       />
