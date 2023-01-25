@@ -121,7 +121,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
                     req
                   </Badge>
                 </FormLabel>
-                <Select size="sm" {...register('name')}>
+                <Select size="sm" borderRadius={'md'} {...register('name')}>
                   <option>test</option>
                 </Select>
                 <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
@@ -136,7 +136,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
                         req
                       </Badge>
                     </FormLabel>
-                    <Input size="sm" {...register('versionNumber')} />
+                    <Input size="sm" borderRadius={'md'} {...register('versionNumber')} />
                     <FormErrorMessage>{errors.versionNumber?.message}</FormErrorMessage>
                   </FormControl>
                 </Box>
@@ -148,7 +148,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
                         req
                       </Badge>
                     </FormLabel>
-                    <Input size="sm" {...register('versionName')} />
+                    <Input size="sm" borderRadius={'md'} {...register('versionName')} />
                     <FormErrorMessage>{errors.versionName?.message}</FormErrorMessage>
                   </FormControl>
                 </Box>
@@ -164,7 +164,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
                           req
                         </Badge>
                       </FormLabel>
-                      <Input size="sm" {...register('originalVersionNumber')} />
+                      <Input size="sm" borderRadius={'md'} {...register('originalVersionNumber')} />
                       <FormErrorMessage>{errors.originalVersionNumber?.message}</FormErrorMessage>
                     </FormControl>
                   </Box>
