@@ -4,6 +4,13 @@ export type OTAUpload = {
 
 export type OTASummary = {
   name: string;
-  versionNumber: number;
-  versionName: string;
+  ota_type: string;
+  version_number: number;
+  version_name: string;
+  original_version_number?: number;
+  upload_path: string;
+};
+
+export type OTASummaries = {
+  items: Array<OTASummary>;
 };
