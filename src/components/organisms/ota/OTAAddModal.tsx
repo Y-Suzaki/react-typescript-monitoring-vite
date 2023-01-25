@@ -50,8 +50,8 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
     defaultValues: {
       otaType: 'apk',
       name: 'test',
-      newVersionNumber: undefined,
-      newVersionName: undefined,
+      versionNumber: undefined,
+      versionName: undefined,
       uploadFile: undefined,
     },
     resolver: yupResolver(otaFormSchema),
@@ -81,6 +81,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
 
   const onCloseModal = () => {
     setUploadFileName('');
+    setShouldOldVersion(false);
     reset();
     onClose();
   };
@@ -89,7 +90,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
     <Modal isOpen={isOpen} onClose={onCloseModal} autoFocus={false} size={'xl'} motionPreset="slideInBottom">
       <ModalOverlay />
       <ModalContent pb={4}>
-        <ModalHeader>Upload APK / Diff Image</ModalHeader>
+        <ModalHeader textAlign={'center'}>Upload APK / Diff Image</ModalHeader>
         <ModalCloseButton />
         <ModalBody mx={8}>
           <VStack align={'left'} bgColor={'white'}>
@@ -113,11 +114,11 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
                   )}
                 />
               </FormControl>
-              <FormControl width={'100%'} mb={6} isInvalid={errors.name !== undefined}>
+              <FormControl width={'100%'} mb={8} isInvalid={errors.name !== undefined}>
                 <FormLabel htmlFor="name" fontSize="sm">
                   Name
                   <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
+                    req
                   </Badge>
                 </FormLabel>
                 <Select size="sm" {...register('name')}>
@@ -126,46 +127,55 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
                 <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
               </FormControl>
 
-              <FormControl width={'100%'} mb={8} isInvalid={errors.newVersionNumber != undefined}>
-                <FormLabel htmlFor="newVersionNumber" fontSize="sm">
-                  New Version Number
-                  <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
-                  </Badge>
-                </FormLabel>
-                <Input size="sm" {...register('newVersionNumber')} />
-                <FormErrorMessage>{errors.newVersionNumber?.message}</FormErrorMessage>
-              </FormControl>
-
-              <FormControl width={'100%'} mb={8} isInvalid={errors.newVersionName != undefined}>
-                <FormLabel htmlFor="newVersionName" fontSize="sm">
-                  New Version Name
-                  <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
-                  </Badge>
-                </FormLabel>
-                <Input size="sm" {...register('newVersionName')} />
-                <FormErrorMessage>{errors.newVersionName?.message}</FormErrorMessage>
-              </FormControl>
+              <HStack spacing={3} alignItems={'start'}>
+                <Box w={'48%'}>
+                  <FormControl width={'100%'} mb={8} isInvalid={errors.versionNumber != undefined}>
+                    <FormLabel htmlFor="versionNumber" fontSize="sm">
+                      Version Number
+                      <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
+                        req
+                      </Badge>
+                    </FormLabel>
+                    <Input size="sm" {...register('versionNumber')} />
+                    <FormErrorMessage>{errors.versionNumber?.message}</FormErrorMessage>
+                  </FormControl>
+                </Box>
+                <Box w={'48%'}>
+                  <FormControl width={'100%'} mb={8} isInvalid={errors.versionName != undefined}>
+                    <FormLabel htmlFor="versionName" fontSize="sm">
+                      Version Name
+                      <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
+                        req
+                      </Badge>
+                    </FormLabel>
+                    <Input size="sm" {...register('versionName')} />
+                    <FormErrorMessage>{errors.versionName?.message}</FormErrorMessage>
+                  </FormControl>
+                </Box>
+              </HStack>
 
               {shouldOldVersion ? (
-                <FormControl width={'100%'} mb={8} isInvalid={errors.oldVersionNumber != undefined}>
-                  <FormLabel htmlFor="oldVersionNumber" fontSize="sm">
-                    Old Version Number
-                    <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                      required
-                    </Badge>
-                  </FormLabel>
-                  <Input size="sm" {...register('oldVersionNumber')} />
-                  <FormErrorMessage>{errors.oldVersionNumber?.message}</FormErrorMessage>
-                </FormControl>
+                <HStack spacing={8} alignItems={'start'}>
+                  <Box w={'48%'}>
+                    <FormControl width={'100%'} mb={8} isInvalid={errors.originalVersionNumber != undefined}>
+                      <FormLabel htmlFor="originalVersionNumber" fontSize="sm">
+                        Original Version Number
+                        <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
+                          req
+                        </Badge>
+                      </FormLabel>
+                      <Input size="sm" {...register('originalVersionNumber')} />
+                      <FormErrorMessage>{errors.originalVersionNumber?.message}</FormErrorMessage>
+                    </FormControl>
+                  </Box>
+                </HStack>
               ) : null}
 
               <FormControl width={'100%'} mb={8} isInvalid={errors.uploadFile != undefined}>
                 <FormLabel htmlFor="uploadFile" fontSize="sm">
                   Add File
                   <Badge fontSize="0.2em" variant="outline" colorScheme="red" borderRadius={'5px'} ml={'12px'}>
-                    required
+                    req
                   </Badge>
                 </FormLabel>
                 <HStack>

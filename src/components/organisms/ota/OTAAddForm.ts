@@ -5,9 +5,9 @@ import { InferType } from 'yup';
 export const otaSchemaBase = {
   otaType: yup.string().required('Type is required.').oneOf(['apk', 'image']),
   name: yup.string().required('Name is required.').oneOf(['test']),
-  newVersionNumber: yup.number().typeError('Version Number must be number.'),
-  newVersionName: yup.string().required('Version Name is required.'),
-  oldVersionNumber: yup
+  versionNumber: yup.number().typeError('Version Number must be number.'),
+  versionName: yup.string().required('Version Name is required.'),
+  originalVersionNumber: yup
     .number()
     .typeError('Version Number must be number.')
     .nullable()
