@@ -13,10 +13,11 @@ import { Location } from '../components/pages/Location';
 import { Event } from '../components/pages/Event';
 import { News } from '../components/pages/News';
 import { Device } from '../components/pages/Device';
-import { OTA } from '../components/pages/OTA';
+import { Ota } from '../components/pages/Ota';
+import { array } from 'yup';
 
 export const Router = function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, allowedServices } = useAuth();
   const { authSession } = useAuthSession();
   console.log(`Public Router: ${isAuthenticated}, ${isLoading}`);
 
@@ -32,7 +33,10 @@ export const Router = function Router() {
         <>
           <Route path={'/'} element={<Login />} />
           {isAuthenticated ? (
-            <Route path={'/home/*'} element={<Homes isAuthenticated={isAuthenticated} />} />
+            <Route
+              path={'/home/*'}
+              element={<Homes isAuthenticated={isAuthenticated} allowedServices={allowedServices} />}
+            />
           ) : (
             <Route path={'/home/*'} element={<Navigate to="/" />} />
           )}
@@ -46,8 +50,8 @@ export const Router = function Router() {
   );
 };
 
-const Homes = memo(function Homes(props: { isAuthenticated: boolean }) {
-  const { isAuthenticated } = props;
+const Homes = memo(function Homes(props: { isAuthenticated: boolean; allowedServices: Array<string> }) {
+  const { isAuthenticated, allowedServices } = props;
   console.log(`Homes: Router. ${isAuthenticated}`);
   return (
     <Routes>
@@ -60,14 +64,17 @@ const Homes = memo(function Homes(props: { isAuthenticated: boolean }) {
         }
       />
 
-      <Route
-        path={'/location'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <Location />
-          </PrivateRouter>
-        }
-      />
+      {allowedServices.includes('location') ? (
+        <Route
+          path={'/location'}
+          element={
+            <PrivateRouter isAuthenticated={isAuthenticated}>
+              <Location />
+            </PrivateRouter>
+          }
+        />
+      ) : null}
+
       <Route
         path={'/event'}
         element={
@@ -86,7 +93,7 @@ const Homes = memo(function Homes(props: { isAuthenticated: boolean }) {
       />
 
       <Route
-        path={'/news_add'}
+        path={'/news'}
         element={
           <PrivateRouter isAuthenticated={isAuthenticated}>
             <News />
@@ -107,7 +114,7 @@ const Homes = memo(function Homes(props: { isAuthenticated: boolean }) {
         path={'/ota'}
         element={
           <PrivateRouter isAuthenticated={isAuthenticated}>
-            <OTA />
+            <Ota />
           </PrivateRouter>
         }
       />

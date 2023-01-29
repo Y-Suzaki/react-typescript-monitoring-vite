@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { useMessage } from './useMessage';
 import { useIdToken } from './useIdToken';
-import { OTAFormType } from '../components/organisms/ota/OTAAddForm';
+import { OtaFormType } from '../components/organisms/ota/OtaAddForm';
 import axios from 'axios';
-import { OTAUpload } from '../types/api/ota';
+import { OtaUpload } from '../types/api/ota';
 
-export const useOTAAdd = () => {
+export const useOtaAdd = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const { showMessage } = useMessage();
   const { getIdToken } = useIdToken();
   const apiDomain = import.meta.env.VITE_APP_BACKOFFICE_API_DOMAIN;
 
-  const addOTA = async (ota: OTAFormType) => {
+  const addOTA = async (ota: OtaFormType) => {
     setIsLoading(true);
     setIsError(false);
     console.log(ota);
 
     try {
       axios.defaults.headers.common['Authorization'] = await getIdToken();
-      const uploadUrlResponse = await axios.get<OTAUpload>(`${apiDomain}/ota`);
+      const uploadUrlResponse = await axios.get<OtaUpload>(`${apiDomain}/ota`);
 
       const uploadResponse = await axios.put(uploadUrlResponse.data.upload_url, ota.uploadFile[0], {
         headers: {
@@ -28,11 +28,11 @@ export const useOTAAdd = () => {
         },
       });
       console.log(uploadResponse);
-      showMessage({ title: 'Succeed to add the OTA software.', status: 'info' });
+      showMessage({ title: 'Succeed to add the Ota software.', status: 'info' });
     } catch (e) {
       console.warn(e);
       setIsError(true);
-      showMessage({ title: 'Failed to add the OTA software.', status: 'error' });
+      showMessage({ title: 'Failed to add the Ota software.', status: 'error' });
     } finally {
       setIsLoading(false);
     }

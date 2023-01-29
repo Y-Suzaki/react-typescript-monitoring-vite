@@ -23,22 +23,22 @@ import {
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { SubmitButton } from '../../atoms/button/SubmitButton';
-import { otaFormSchema, OTAFormType } from './OTAAddForm';
+import { otaFormSchema, OtaFormType } from './OtaAddForm';
 import { FileUpload } from '../../atoms/input/FileUpload';
 import { FiFile } from 'react-icons/all';
 import { Icon } from '@chakra-ui/icons';
-import { useOTAAdd } from '../../../hooks/useOTAAdd';
+import { useOtaAdd } from '../../../hooks/useOtaAdd';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
+export const OtaAddModal: FC<Props> = memo(function NewsAddModal(props) {
   const { isOpen, onClose } = props;
   const [uploadFileName, setUploadFileName] = useState('');
   const [shouldOldVersion, setShouldOldVersion] = useState(false);
-  const { addOTA, isLoading, isError } = useOTAAdd();
+  const { addOTA, isLoading, isError } = useOtaAdd();
 
   const {
     register,
@@ -46,7 +46,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
     reset,
     formState: { errors },
     control,
-  } = useForm<OTAFormType>({
+  } = useForm<OtaFormType>({
     defaultValues: {
       otaType: 'apk',
       name: 'test',
@@ -56,7 +56,7 @@ export const OTAAddModal: FC<Props> = memo(function NewsAddModal(props) {
     },
     resolver: yupResolver(otaFormSchema),
   });
-  const onSubmit: SubmitHandler<OTAFormType> = (data) => {
+  const onSubmit: SubmitHandler<OtaFormType> = (data) => {
     (async () => {
       await addOTA(data);
       if (!isError) {

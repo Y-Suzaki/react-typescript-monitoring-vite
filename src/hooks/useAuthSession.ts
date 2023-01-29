@@ -1,9 +1,10 @@
 import { useAuth } from './useAuth';
 import { Auth } from 'aws-amplify';
 import { useCallback } from 'react';
+import { getAllowedServices } from '../helper/cognitoAttribute';
 
 export const useAuthSession = () => {
-  const { setIsAuthenticated, setUsername, setIsLoading } = useAuth();
+  const { setIsAuthenticated, setUsername, setIsLoading, setAllowedServices } = useAuth();
   const authSession = useCallback(async () => {
     console.log('authSession useCallback');
     try {
@@ -12,6 +13,7 @@ export const useAuthSession = () => {
       console.log(result);
       setUsername(result.username);
       setIsAuthenticated(true);
+      setAllowedServices(getAllowedServices(result.attributes));
     } catch (e) {
       console.log(e);
       setUsername('');

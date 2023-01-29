@@ -8,6 +8,8 @@ export type AuthContextType = {
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   username: string;
   setUsername: Dispatch<SetStateAction<string>>;
+  allowedServices: Array<string>;
+  setAllowedServices: Dispatch<SetStateAction<Array<string>>>;
 
   // signUp: (username: string, password: string) => Promise<AuthResult>;
   // confirmSignUp: (verificationCode: string) => Promise<AuthResult>;

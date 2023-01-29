@@ -19,4 +19,4 @@ export const otaSchemaBase = {
 };
 
 export const otaFormSchema = yup.object(otaSchemaBase);
-export type OTAFormType = InferType<typeof otaFormSchema>;
+export type OtaFormType = InferType<typeof otaFormSchema>;

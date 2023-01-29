@@ -1,8 +1,8 @@
-export type OTAUpload = {
+export type OtaUpload = {
   upload_url: string;
 };
 
-export type OTASummary = {
+export type OtaSummary = {
   name: string;
   ota_type: string;
   version_number: number;
@@ -11,6 +11,6 @@ export type OTASummary = {
   upload_path: string;
 };
 
-export type OTASummaries = {
-  items: Array<OTASummary>;
+export type OtaSummaries = {
+  items: Array<OtaSummary>;
 };

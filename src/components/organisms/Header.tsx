@@ -22,7 +22,7 @@ import { useAuth } from '../../hooks/useAuth';
 export const Header: FC = memo(function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { signOut } = useAuthMethod();
-  const { username } = useAuth();
+  const { username, allowedServices } = useAuth();
 
   // react-router-dom v6以降は、useHistoryではなく、useNavigateで画面遷移を行う。
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export const Header: FC = memo(function Header() {
   }, []);
 
   const onClickNewsAdd = useCallback(() => {
-    navigate('/home/news_add');
+    navigate('/home/news');
   }, []);
 
   const onClickDevice = useCallback(() => {
@@ -65,9 +65,11 @@ export const Header: FC = memo(function Header() {
           </Heading>
         </Flex>
         <Flex fontSize="md" align="center" flexGrow={4} display={{ base: 'none', md: 'flex' }}>
-          <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickLocation}>Location</Link>
-          </Box>
+          {allowedServices.includes('location') ? (
+            <Box pr={5} _hover={{ opacity: 0.7 }}>
+              <Link onClick={onClickLocation}>Location</Link>
+            </Box>
+          ) : null}
           <Box pr={5} _hover={{ opacity: 0.7 }}>
             <Link onClick={onClickEvent}>Event</Link>
           </Box>

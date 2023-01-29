@@ -2,9 +2,10 @@ import { Auth } from 'aws-amplify';
 import { useMessage } from './useMessage';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './useAuth';
+import { getAllowedServices } from '../helper/cognitoAttribute';
 
 export const useAuthMethod = () => {
-  const { setIsAuthenticated, setUsername, setIsLoading } = useAuth();
+  const { setIsAuthenticated, setUsername, setIsLoading, setAllowedServices } = useAuth();
   const { showMessage } = useMessage();
   const navigate = useNavigate();
 
@@ -15,9 +16,17 @@ export const useAuthMethod = () => {
       console.log(result);
       setUsername(result.username);
       setIsAuthenticated(true);
+      const allowedAttributes = getAllowedServices(result.attributes);
+      setAllowedServices(allowedAttributes);
+
       const message = 'Authentication success.';
       showMessage({ title: message, status: 'info' });
-      navigate('/home');
+
+      if (allowedAttributes) {
+        navigate(`/home/${allowedAttributes[0]}`);
+      } else {
+        navigate('/home');
+      }
       return { success: true, message: '' };
     } catch (error) {
       console.log(error);
