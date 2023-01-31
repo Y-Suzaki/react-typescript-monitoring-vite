@@ -1,26 +1,23 @@
+/** @jsxImportSource @emotion/react */
 import { FC, memo, useCallback } from 'react';
-import {
-  Box,
-  Flex,
-  Heading,
-  Link,
-  Button,
-  useDisclosure,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, Link, Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+
+import { TriangleDownIcon } from '@chakra-ui/icons';
+
 import { useNavigate } from 'react-router-dom';
-import { MenuIconButton } from '../atoms/button/MenuIconButton';
-import { MenuDrawer } from './MenuDrawer';
 import { HiUserCircle } from 'react-icons/hi';
 import { useAuthMethod } from '../../hooks/useAuthMethod';
 import { useAuth } from '../../hooks/useAuth';
 
+// const selectOption = css`
+//   color: black;
+//   font-size: 14px;
+//   padding: 10px;
+//   margin: 10px;
+// `;
+
 // 無名関数だとLinterで指摘される。
 export const Header: FC = memo(function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { signOut } = useAuthMethod();
   const { username, allowedServices } = useAuth();
 
@@ -52,19 +49,23 @@ export const Header: FC = memo(function Header() {
     navigate('/home/ota');
   }, []);
 
+  const onClickAwsEnv = useCallback((awsEnv: string) => {
+    console.log();
+  }, []);
+
   const onClickLogout = useCallback(() => {
     (async () => signOut())();
   }, []);
 
   return (
     <>
-      <Flex as="nav" bg="teal.800" color="gray.50" align="center" justify="space-between" padding={{ base: 1, md: 2 }}>
+      <Flex as="nav" bg="gray.700" color="gray.50" align="center" justify="space-between" padding={{ base: 1, md: 2 }}>
         <Flex align="center" as="a" mr={8} _hover={{ cursor: 'pointer', opacity: 0.7 }} onClick={onClickHome}>
-          <Heading as="h1" fontSize={{ base: 'md', md: 'lg' }}>
+          <Heading as="h1" fontSize={{ base: 'md', md: 'md' }}>
             Drive Backoffice
           </Heading>
         </Flex>
-        <Flex fontSize="md" align="center" flexGrow={4} display={{ base: 'none', md: 'flex' }}>
+        <Flex fontSize="sm" align="center" flexGrow={4} display={{ base: 'none', md: 'flex' }}>
           {allowedServices.includes('location') ? (
             <Box pr={5} _hover={{ opacity: 0.7 }}>
               <Link onClick={onClickLocation}>Location</Link>
@@ -86,12 +87,35 @@ export const Header: FC = memo(function Header() {
             <Link onClick={onClickOTA}>OTA</Link>
           </Box>
         </Flex>
-        <Flex>
+        <Flex fontSize="sm" align="center" gap={5}>
           <Menu>
             <MenuButton
               as={Button}
               variant="outline"
-              p={3}
+              py={3}
+              px={4}
+              size="xs"
+              rightIcon={<TriangleDownIcon />}
+              _hover={{ opacity: 0.6 }}
+              _expanded={{ opacity: 0.6, bg: 'gray.500' }}
+            >
+              Staging
+            </MenuButton>
+            <MenuList color="black" fontSize="sm" borderWidth={2} mt={2} px={0} py={1}>
+              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'orange.100' }}>
+                Staging
+              </MenuItem>
+              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'orange.100' }}>
+                Production
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          <Menu>
+            <MenuButton
+              as={Button}
+              variant="outline"
+              py={3}
+              px={4}
               size="xs"
               rightIcon={<HiUserCircle />}
               _hover={{ opacity: 0.6 }}
@@ -99,22 +123,14 @@ export const Header: FC = memo(function Header() {
             >
               {username}
             </MenuButton>
-            <MenuList color="black" fontSize="sm" borderWidth={2} mt={2}>
-              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'teal.50' }}>
+            <MenuList color="black" fontSize="sm" borderWidth={2} mt={2} px={0} py={1}>
+              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'orange.100' }}>
                 Sign out
               </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
-        <MenuIconButton onOpen={onOpen} />
       </Flex>
-      <MenuDrawer
-        isOpen={isOpen}
-        onClose={onClose}
-        onClickHome={onClickHome}
-        onClickUserManagement={onClickLocation}
-        onClickSetting={onClickSetting}
-      />
     </>
   );
 });
