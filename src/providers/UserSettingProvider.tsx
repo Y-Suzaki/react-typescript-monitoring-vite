@@ -5,7 +5,7 @@ export const UserSettingContext = createContext<UserSettingType>({} as UserSetti
 
 export const UserSettingProvider = (props: { children: ReactNode }) => {
   const { children } = props;
-  const [awsEnv, setAwsEnv] = useState('');
+  const [awsEnv, setAwsEnv] = useState('Staging');
   const userSetting: UserSettingType = {
     awsEnv,
     setAwsEnv,

@@ -47,7 +47,7 @@ export const Home: FC = memo(function Home() {
 
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <p>Homeページ</p>
       <p>{user}</p>
       <p>State Count: {count}</p>

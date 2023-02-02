@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { FC, memo, useCallback } from 'react';
+import { ChangeEvent, FC, memo, useCallback, useState } from 'react';
 import { Box, Flex, Heading, Link, Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 
 import { TriangleDownIcon } from '@chakra-ui/icons';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { HiUserCircle } from 'react-icons/hi';
 import { useAuthMethod } from '../../hooks/useAuthMethod';
 import { useAuth } from '../../hooks/useAuth';
+import { useUserSettingContext } from '../../hooks/useUserSettingContext';
 
 // const selectOption = css`
 //   color: black;
@@ -20,6 +21,7 @@ import { useAuth } from '../../hooks/useAuth';
 export const Header: FC = memo(function Header() {
   const { signOut } = useAuthMethod();
   const { username, allowedServices } = useAuth();
+  const { awsEnv, setAwsEnv } = useUserSettingContext();
 
   // react-router-dom v6以降は、useHistoryではなく、useNavigateで画面遷移を行う。
   const navigate = useNavigate();
@@ -50,12 +52,15 @@ export const Header: FC = memo(function Header() {
   }, []);
 
   const onClickAwsEnv = useCallback((awsEnv: string) => {
-    console.log();
+    console.log(`awsEnv: ${awsEnv}`);
+    setAwsEnv(awsEnv);
   }, []);
 
   const onClickLogout = useCallback(() => {
     (async () => signOut())();
   }, []);
+
+  console.log('********************');
 
   return (
     <>
@@ -99,13 +104,21 @@ export const Header: FC = memo(function Header() {
               _hover={{ opacity: 0.6 }}
               _expanded={{ opacity: 0.6, bg: 'gray.500' }}
             >
-              Staging
+              {awsEnv}
             </MenuButton>
             <MenuList color="black" fontSize="sm" borderWidth={2} mt={2} px={0} py={1}>
-              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'orange.100' }}>
+              <MenuItem
+                onClick={() => onClickAwsEnv('Staging')}
+                _focus={{ bgColor: 'white' }}
+                _hover={{ bgColor: 'orange.100' }}
+              >
                 Staging
               </MenuItem>
-              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'orange.100' }}>
+              <MenuItem
+                onClick={() => onClickAwsEnv('Production')}
+                _focus={{ bgColor: 'white' }}
+                _hover={{ bgColor: 'orange.100' }}
+              >
                 Production
               </MenuItem>
             </MenuList>

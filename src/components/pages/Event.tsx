@@ -19,7 +19,7 @@ export const Event: FC = memo(function Event() {
 
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <VStack align={'left'} bgColor={'white'} borderRadius={'md'} shadow={'md'} m={4}>
         <SearchDayBox isLoading={isLoading} onClickSearch={onClickSearch} />
         <Divider />

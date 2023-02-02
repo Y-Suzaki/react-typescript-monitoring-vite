@@ -16,7 +16,7 @@ export const Setting: FC = memo(function Setting() {
 
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <VStack align={'left'} bgColor={'white'} borderRadius={'md'} shadow={'md'} m={4}>
         <SearchBox isLoading={isLoading} onClickSearch={onClickSearch} />
         <Divider />

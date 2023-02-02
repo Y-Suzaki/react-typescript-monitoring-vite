@@ -15,6 +15,7 @@ import { News } from '../components/pages/News';
 import { Device } from '../components/pages/Device';
 import { Ota } from '../components/pages/Ota';
 import { array } from 'yup';
+import { Header } from '../components/organisms/Header';
 
 export const Router = function Router() {
   const { isAuthenticated, isLoading, allowedServices } = useAuth();
@@ -54,73 +55,76 @@ const Homes = memo(function Homes(props: { isAuthenticated: boolean; allowedServ
   const { isAuthenticated, allowedServices } = props;
   console.log(`Homes: Router. ${isAuthenticated}`);
   return (
-    <Routes>
-      <Route
-        path={'/'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <Home />
-          </PrivateRouter>
-        }
-      />
-
-      {allowedServices.includes('location') ? (
+    <>
+      <Header />
+      <Routes>
         <Route
-          path={'/location'}
+          path={'/'}
           element={
             <PrivateRouter isAuthenticated={isAuthenticated}>
-              <Location />
+              <Home />
             </PrivateRouter>
           }
         />
-      ) : null}
 
-      <Route
-        path={'/event'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <Event />
-          </PrivateRouter>
-        }
-      />
-      <Route
-        path={'/setting'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <Setting />
-          </PrivateRouter>
-        }
-      />
+        {allowedServices.includes('location') ? (
+          <Route
+            path={'/location'}
+            element={
+              <PrivateRouter isAuthenticated={isAuthenticated}>
+                <Location />
+              </PrivateRouter>
+            }
+          />
+        ) : null}
 
-      <Route
-        path={'/news'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <News />
-          </PrivateRouter>
-        }
-      />
+        <Route
+          path={'/event'}
+          element={
+            <PrivateRouter isAuthenticated={isAuthenticated}>
+              <Event />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path={'/setting'}
+          element={
+            <PrivateRouter isAuthenticated={isAuthenticated}>
+              <Setting />
+            </PrivateRouter>
+          }
+        />
 
-      <Route
-        path={'/device'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <Device />
-          </PrivateRouter>
-        }
-      />
+        <Route
+          path={'/news'}
+          element={
+            <PrivateRouter isAuthenticated={isAuthenticated}>
+              <News />
+            </PrivateRouter>
+          }
+        />
 
-      <Route
-        path={'/ota'}
-        element={
-          <PrivateRouter isAuthenticated={isAuthenticated}>
-            <Ota />
-          </PrivateRouter>
-        }
-      />
+        <Route
+          path={'/device'}
+          element={
+            <PrivateRouter isAuthenticated={isAuthenticated}>
+              <Device />
+            </PrivateRouter>
+          }
+        />
 
-      {/*<Route path={'/user_management'} element={<UserManagement />} />*/}
-      <Route path={'*'} element={<NotFound />} />
-    </Routes>
+        <Route
+          path={'/ota'}
+          element={
+            <PrivateRouter isAuthenticated={isAuthenticated}>
+              <Ota />
+            </PrivateRouter>
+          }
+        />
+
+        {/*<Route path={'/user_management'} element={<UserManagement />} />*/}
+        <Route path={'*'} element={<NotFound />} />
+      </Routes>
+    </>
   );
 });

@@ -37,7 +37,7 @@ export const Device: FC = memo(function News() {
 
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <VStack align={'left'} bgColor={'white'} borderRadius={'md'} shadow={'md'} m={4}>
         <HStack p={2} borderRadius={'md'} justify="space-between" alignItems="flex-end">
           <HStack width={'100%'} alignItems="flex-end">

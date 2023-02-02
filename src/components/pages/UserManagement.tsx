@@ -32,7 +32,7 @@ export const UserManagement: FC = memo(function UserManagement() {
 
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <p>UserManagementページ</p>
       {loading ? (
         <Center h="100vh">

@@ -20,7 +20,7 @@ export const Ota: FC = memo(function News() {
 
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <VStack align={'left'} bgColor={'white'} borderRadius={'md'} shadow={'md'} m={4}>
         <Box mx={2} mt={2}>
           <PrimaryButton onClick={onOpen}>Upload</PrimaryButton>
