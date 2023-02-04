@@ -25,10 +25,12 @@ import { useAuthMethod } from '../../hooks/useAuthMethod';
 import { useAuth } from '../../hooks/useAuth';
 import { useUserSettingContext } from '../../hooks/useUserSettingContext';
 import { getAwsEnvs } from '../../helper/viteEnv';
+import { useMessage } from '../../hooks/useMessage';
 
 // 無名関数だとLinterで指摘される。
 export const Header: FC = memo(function Header() {
   const { signOut } = useAuthMethod();
+  const { showMessage } = useMessage();
   const { username, allowedServices } = useAuth();
   const { awsEnv, setAwsEnv } = useUserSettingContext();
 
@@ -63,7 +65,7 @@ export const Header: FC = memo(function Header() {
   }, []);
 
   const onClickAwsEnv = useCallback((awsEnv: string) => {
-    console.log(`awsEnv: ${awsEnv}`);
+    showMessage({ title: `Change AWS environment to ${awsEnv}.`, status: 'info' });
     setAwsEnv(awsEnv);
   }, []);
 
@@ -73,7 +75,15 @@ export const Header: FC = memo(function Header() {
 
   return (
     <>
-      <Flex as="nav" bg="gray.700" color="gray.50" align="center" justify="space-between" padding={{ base: 1, md: 2 }}>
+      <Flex
+        as="nav"
+        bg={awsEnv === 'Production' ? 'pink.800' : 'gray.700'}
+        color="gray.50"
+        align="center"
+        justify="space-between"
+        padding={{ base: 1, md: 2 }}
+      >
+        {/*<Flex as="nav" bg="gray.700" color="gray.50" align="center" justify="space-between" padding={{ base: 1, md: 2 }}>*/}
         <Flex align="center" as="a" mr={8} _hover={{ cursor: 'pointer', opacity: 0.7 }} onClick={onClickHome}>
           <Heading as="h1" fontSize={{ base: 'md', md: 'md' }}>
             Drive Backoffice
@@ -131,7 +141,7 @@ export const Header: FC = memo(function Header() {
                   key={env}
                   onClick={() => onClickAwsEnv(env)}
                   _focus={{ bgColor: 'white' }}
-                  _hover={{ bgColor: 'orange.100' }}
+                  _hover={{ bgColor: 'gray.100' }}
                 >
                   {env}
                 </MenuItem>
@@ -169,7 +179,7 @@ export const Header: FC = memo(function Header() {
               {username}
             </MenuButton>
             <MenuList color="black" fontSize="sm" borderWidth={2} mt={2} px={0} py={1}>
-              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'orange.100' }}>
+              <MenuItem onClick={onClickLogout} _focus={{ bgColor: 'white' }} _hover={{ bgColor: 'gray.100' }}>
                 Sign out
               </MenuItem>
             </MenuList>
