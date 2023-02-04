@@ -9,3 +9,11 @@ export const getApiDomain = (awsEnv: string) => {
     throw `Can not find the API Domain. AWS Env = ${awsEnv}`;
   }
 };
+
+export const getAwsEnvs = () => {
+  return import.meta.env.VITE_APP_AWS_ENVIRONMENTS.split(',');
+};
+
+export const getAwsDefaultEnv = () => {
+  return getAwsEnvs()[0];
+};

@@ -24,19 +24,15 @@ import { MdOutlineSecurityUpdate } from 'react-icons/md';
 import { useAuthMethod } from '../../hooks/useAuthMethod';
 import { useAuth } from '../../hooks/useAuth';
 import { useUserSettingContext } from '../../hooks/useUserSettingContext';
-
-// const selectOption = css`
-//   color: black;
-//   font-size: 14px;
-//   padding: 10px;
-//   margin: 10px;
-// `;
+import { getAwsEnvs } from '../../helper/viteEnv';
 
 // 無名関数だとLinterで指摘される。
 export const Header: FC = memo(function Header() {
   const { signOut } = useAuthMethod();
   const { username, allowedServices } = useAuth();
   const { awsEnv, setAwsEnv } = useUserSettingContext();
+
+  const awsEnvs = getAwsEnvs();
 
   // react-router-dom v6以降は、useHistoryではなく、useNavigateで画面遷移を行う。
   const navigate = useNavigate();
@@ -74,8 +70,6 @@ export const Header: FC = memo(function Header() {
   const onClickLogout = useCallback(() => {
     (async () => signOut())();
   }, []);
-
-  console.log('********************');
 
   return (
     <>
@@ -132,21 +126,34 @@ export const Header: FC = memo(function Header() {
               {awsEnv}
             </MenuButton>
             <MenuList color="black" fontSize="sm" borderWidth={2} mt={2} px={0} py={1}>
-              <MenuItem
-                onClick={() => onClickAwsEnv('Staging')}
-                _focus={{ bgColor: 'white' }}
-                _hover={{ bgColor: 'orange.100' }}
-              >
-                Staging
-              </MenuItem>
-              <MenuItem
-                onClick={() => onClickAwsEnv('Production')}
-                _focus={{ bgColor: 'white' }}
-                _hover={{ bgColor: 'orange.100' }}
-              >
-                Production
-              </MenuItem>
+              {awsEnvs.map((env: string) => (
+                <MenuItem
+                  key={env}
+                  onClick={() => onClickAwsEnv(env)}
+                  _focus={{ bgColor: 'white' }}
+                  _hover={{ bgColor: 'orange.100' }}
+                >
+                  {env}
+                </MenuItem>
+              ))}
             </MenuList>
+
+            {/*<MenuList color="black" fontSize="sm" borderWidth={2} mt={2} px={0} py={1}>*/}
+            {/*  <MenuItem*/}
+            {/*    onClick={() => onClickAwsEnv('Staging')}*/}
+            {/*    _focus={{ bgColor: 'white' }}*/}
+            {/*    _hover={{ bgColor: 'orange.100' }}*/}
+            {/*  >*/}
+            {/*    Staging*/}
+            {/*  </MenuItem>*/}
+            {/*  <MenuItem*/}
+            {/*    onClick={() => onClickAwsEnv('Production')}*/}
+            {/*    _focus={{ bgColor: 'white' }}*/}
+            {/*    _hover={{ bgColor: 'orange.100' }}*/}
+            {/*  >*/}
+            {/*    Production*/}
+            {/*  </MenuItem>*/}
+            {/*</MenuList>*/}
           </Menu>
           <Menu>
             <MenuButton
