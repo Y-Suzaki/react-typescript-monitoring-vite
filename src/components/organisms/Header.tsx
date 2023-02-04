@@ -1,11 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { ChangeEvent, FC, memo, useCallback, useState } from 'react';
-import { Box, Flex, Heading, Link, Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Icon,
+  Link,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  HStack,
+  Text,
+} from '@chakra-ui/react';
 
 import { TriangleDownIcon } from '@chakra-ui/icons';
 
 import { useNavigate } from 'react-router-dom';
-import { HiUserCircle } from 'react-icons/hi';
+import { FaUserCircle } from 'react-icons/fa';
+import { FiMail } from 'react-icons/fi';
+import { MdOutlineSecurityUpdate } from 'react-icons/md';
 import { useAuthMethod } from '../../hooks/useAuthMethod';
 import { useAuth } from '../../hooks/useAuth';
 import { useUserSettingContext } from '../../hooks/useUserSettingContext';
@@ -76,20 +91,30 @@ export const Header: FC = memo(function Header() {
               <Link onClick={onClickLocation}>Location</Link>
             </Box>
           ) : null}
+          {/*<Box pr={5} _hover={{ opacity: 0.7 }}>*/}
+          {/*  <Link onClick={onClickEvent}>Event</Link>*/}
+          {/*</Box>*/}
+          {/*<Box pr={5} _hover={{ opacity: 0.7 }}>*/}
+          {/*  <Link onClick={onClickSetting}>Setting</Link>*/}
+          {/*</Box>*/}
           <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickEvent}>Event</Link>
+            <Link onClick={onClickNewsAdd}>
+              <HStack>
+                <Icon as={FiMail} />
+                <Text>News</Text>
+              </HStack>
+            </Link>
           </Box>
-          <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickSetting}>Setting</Link>
-          </Box>
-          <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickNewsAdd}>News</Link>
-          </Box>
-          <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickDevice}>Device</Link>
-          </Box>
-          <Box pr={5} _hover={{ opacity: 0.7 }}>
-            <Link onClick={onClickOTA}>OTA</Link>
+          {/*<Box pr={5} _hover={{ opacity: 0.7 }}>*/}
+          {/*  <Link onClick={onClickDevice}>Device</Link>*/}
+          {/*</Box>*/}
+          <Box pr={8} _hover={{ opacity: 0.7 }}>
+            <Link onClick={onClickOTA}>
+              <HStack>
+                <Icon as={MdOutlineSecurityUpdate} />
+                <Text>OTA</Text>
+              </HStack>
+            </Link>
           </Box>
         </Flex>
         <Flex fontSize="sm" align="center" gap={5}>
@@ -130,7 +155,7 @@ export const Header: FC = memo(function Header() {
               py={3}
               px={4}
               size="xs"
-              rightIcon={<HiUserCircle />}
+              rightIcon={<FaUserCircle />}
               _hover={{ opacity: 0.6 }}
               _expanded={{ opacity: 0.6, bg: 'teal.800' }}
             >
